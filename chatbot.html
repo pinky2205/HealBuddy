@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Heal Buddy</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* New Font: Nunito - known for being soft and friendly */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #fafafa; /* Lighter, warmer background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        #chat-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        /* Styling for User Messages (Deep, Rich Violet with enhanced shadow) */
+        .user-bubble {
+            background-color: #d92895; 
+            color: white;
+            /* Soft, rounded corners */
+            border-radius: 1.25rem 1.25rem 0.25rem 1.25rem; 
+            padding: 0.85rem 1.2rem;
+            max-width: 80%;
+            align-self: flex-end;
+            /* Enhanced, colored shadow for depth */
+            box-shadow: 0 6px 15px -3px rgba(217, 40, 170, 0.3), 0 4px 6px -2px rgba(109, 40, 217, 0.2); 
+        }
+        
+        /* Styling for Bot Messages (Soft Lavender for a gentle, light tone) */
+        .bot-bubble {
+            background-color: #ffe8f5; /* Lightest Violet-100 */
+            color: #951d79; /* Deep Violet text for readability */
+            /* Soft, rounded corners */
+            border-radius: 1.25rem 1.25rem 1.25rem 0.25rem; 
+            padding: 0.85rem 1.2rem;
+            max-width: 80%;
+            align-self: flex-start;
+            /* Subtle shadow */
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06); 
+        }
+        
+        .message-text {
+            /* This preserves formatting for the multi-line responses */
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-root" class="w-full max-w-lg bg-white rounded-2xl shadow-2xl flex flex-col h-[90vh]">
+        <header class="p-5 border-b border-violet-100 bg-violet-50 rounded-t-2xl">
+            <h1 class="text-xl font-extrabold text-pink-700">Your Heal Buddy</h1>
+            <p class="text-sm text-pink-600 mt-1">A safe space to share your worries and find a moment of calm.</p>
+        </header>
+
+        <!-- Chat Display Area -->
+        <div id="chat-container" class="flex-grow p-4 space-y-4 flex flex-col">
+            <!-- Initial Welcome Message -->
+            <div class="flex justify-start">
+                <div class="bot-bubble">
+                    <pre class="message-text">Welcome. I'm here for you right now. 
+There's no pressure to talk, but if you want to share how you're feeling, I'm open all ears.</pre>
+                </div>
+            </div>
+            <!-- Messages will be appended here -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
+            <div class="flex">
+                <input type="text" id="user-input" placeholder="Type how you're feeling..." class="flex-grow p-3 border border-gray-300 rounded-l-xl focus:outline-none focus:ring-2 focus:ring-pink-500 text-gray-700" autocomplete="off">
+                <button id="send-button" class="bg-pink-600 text-white p-3 rounded-r-xl hover:bg-pink-700 transition duration-150 ease-in-out font-semibold shadow-md">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Core Application Logic ---
+
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        /**
+         * Scrolls the chat container to the bottom.
+         */
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        /**
+         * Renders a message bubble into the chat container.
+         * @param {string} text - The message content.
+         * @param {'user' | 'bot'} role - The sender's role.
+         */
+        function renderMessage(text, role) {
+            const bubbleContainer = document.createElement('div');
+            bubbleContainer.className = 'flex ' + (role === 'user' ? 'justify-end' : 'justify-start');
+
+            const messageElement = document.createElement('pre');
+            messageElement.textContent = text;
+            messageElement.className = 'message-text ' + (role === 'user' ? 'user-bubble' : 'bot-bubble');
+
+            bubbleContainer.appendChild(messageElement);
+            chatContainer.appendChild(bubbleContainer);
+            scrollToBottom();
+        }
+
+        /**
+         * The simplified, non-AI logic for the chatbot.
+         * @param {string} message - The user's input message.
+         * @returns {string} - The bot's response.
+         */
+        function getBotResponse(message) {
+            const normalizedMessage = message.toLowerCase().trim();
+
+            // --- SUPPORTIVE RULES (Focused entirely on comfort and grounding) ---
+            if (normalizedMessage.includes('sad') || normalizedMessage.includes('down') || normalizedMessage.includes('depressed') || normalizedMessage.includes('cry')) {
+                return "It's okay to feel that way. Right now, can you try to relax your shoulders and unclench your jaw? Just noticing your body can sometimes ease the emotional weight.";
+            } else if (normalizedMessage.includes('alone') || normalizedMessage.includes('lonely') || normalizedMessage.includes('nobody')) {
+                return "You are not alone! I'm right here with you. Share freely anything you want to";
+            } else if (normalizedMessage.includes('cope') || normalizedMessage.includes('overwhelmed') || normalizedMessage.includes('cannot')) {
+                return "This feeling is temporary. Let's practice 'micro-breaks.' Look away from the screen for 30 seconds and just breathe slowly. You only need to focus on this moment.";
+            } else if (normalizedMessage.includes('stressed') || normalizedMessage.includes('anxious') || normalizedMessage.includes('panic') || normalizedMessage.includes('worry') || normalizedMessage.includes('depressed')) {
+                return "It sounds like you're carrying a lot of tension. It's okay to feel this way sometimes. You are safe right now.";
+            } else if (normalizedMessage.includes('bad day') || normalizedMessage.includes('miserable') || normalizedMessage.includes('terrible')) {
+                return "I'm so sorry you're having a hard time. You are strong for reaching out. Please get yourself a glass of water and sit down for one minute. You deserve kindness right now.😇";
+            } else if (normalizedMessage.includes('tired') || normalizedMessage.includes('exhausted')) {
+                return "Your body and mind are working hard. Can you close your eyes for 60 seconds? Even a tiny rest helps. You don't have to be productive right now.";
+            } else if (normalizedMessage.includes('family problems') || normalizedMessage.includes('mother') || normalizedMessage.includes('father') ||  normalizedMessage.includes('sister') || normalizedMessage.includes('brother')) {
+                return "Family problems are a part of everyone's life. Dealing with it may sometimes become difficult. but you're a strong person you will overcome it.❤️‍🩹";
+            } else if (normalizedMessage.includes('accident') || normalizedMessage.includes('injured') || normalizedMessage.includes('ill')) {
+                return "I'm so sorry to hear this, praying for a speedy recovery.";
+            } else if (normalizedMessage.includes('death') || normalizedMessage.includes('died') || normalizedMessage.includes('die')) {
+                return "I'm so sorry for your loss. Please stay strong and I'm here whenever you need.";
+            } else if (normalizedMessage.includes('relationship issues') || normalizedMessage.includes('marriage problems') || normalizedMessage.includes('issues with partner')) {
+                return "Sometimes we all face difficulties in our relationships. This makes our bond more stronger. I hope you and your partner fix things together and stay happy.❤️";
+            } else if (normalizedMessage.includes('breakup') || normalizedMessage.includes('divorce') || normalizedMessage.includes('brokeup')) {
+                return "I feel so sad for you. But sometimes we need to let go of things not made for us.";
+            } else if (normalizedMessage.includes('money problem') || normalizedMessage.includes('broke') || normalizedMessage.includes('no money')) {
+                return "I understand this is a very tough time for you. You can discover your skills and seek for a job now or start a small startup which can help you earn and recover from this issue.";
+            } else if (normalizedMessage.includes('carrier tension') || normalizedMessage.includes('failure') || normalizedMessage.includes(' not able to crack exams')) {
+                return "It's normal to feel tensed about your carrier and upcoming exams.Try your best preparing to crack exams and interview, nothing is impossible. You are just a few steps away from your success. All the best.😊";
+            } else if (normalizedMessage.includes('exam') || normalizedMessage.includes('exam preparation') || normalizedMessage.includes('exam tension')) {
+                return "All the best for your exams.☺️ Hope you prepared well. There's still time just stay calm and utilise your time. Don't think about failures. You got this buddy.🩷";
+            } else if (normalizedMessage.includes('i failed') || normalizedMessage.includes('im done') || normalizedMessage.includes('didnt pass')) {
+                return "Hey, listen Failures are the pillar to success. You still got many chances this is not the end. Please stay strong and try hard for the next. I'm here whenever you need.🫂❤️";
+            } else if (normalizedMessage.includes('not feeling well') || normalizedMessage.includes('sick') || normalizedMessage.includes('tired')) {
+                return " So sad to hear you are not feeling well. Can you tell what symptoms you are facing so that I can help you to take further actions..?";
+            } else if (normalizedMessage.includes('runny nose') || normalizedMessage.includes('sneezing') || normalizedMessage.includes('fever') || normalizedMessage.includes('sore throat') || normalizedMessage.includes('common cold')) {
+                return "Based on your symptoms it seems that you are having Common cold which is quite normal. If you have high fever take Paracetamol(500mg).For throat pain you should gargle 2-3 times a day with warm salt water. Having hot drinks such as tea or soup may also help. If this lasts more than 3-4 days immediately consult a doctor.";
+            } else if (normalizedMessage.includes('watery stools') || normalizedMessage.includes('dehydration') || normalizedMessage.includes('diarrhea')) {
+                return "If you are having frequent watery stools along with dehydration it's quite obvious you may be suffering with Diarrhea or Loose Motion. No worries, drink ORS repeatedly. Avoid eating junk foods with too much oil or spices in it instead shift to curd, banana and rice. If not improved within few days, visit a health specialist positively";
+            } else if (normalizedMessage.includes('vomiting') || normalizedMessage.includes('stomach pain') || normalizedMessage.includes('loose motions') || normalizedMessage.includes('food poisoning')) {
+                return "Oh! that's so uncomfortable. Food poisoning can be reduced by rehydration. Drink ORS and don't eat heavy, let your stomach rest. If you have stomach cramps heating pad can help. Seek a doctor if vomiting occurs very frequent or you face severe weakness. Don't panic. You'll get well soon.❤️‍🩹";
+            } else if (normalizedMessage.includes('hello') || normalizedMessage.includes('hi')) {
+                return "Hello. Thank you for checking in. Remember that whatever you are feeling is valid.";
+            } else if (normalizedMessage.includes('thank') || normalizedMessage.includes('bye')) {
+                return "You are welcome. Please be gentle with yourself today. Take care.";
+            } else {
+                return "I'm sorry, I don't understand that. If you're struggling, try focusing on a feeling like sad, stressed, or alone so I can help you find a comforting step.";
+            }
+
+        }
+
+        /**
+         * Handles the entire send and respond sequence.
+         */
+        function handleSend() {
+            const userText = userInput.value.trim();
+            if (userText === '') return;
+
+            // 1. Render user message
+            renderMessage(userText, 'user');
+
+            // 2. Clear input
+            userInput.value = '';
+            
+            // 3. Get bot response and render it after a short delay
+            setTimeout(() => {
+                const botResponse = getBotResponse(userText);
+                renderMessage(botResponse, 'bot');
+            }, 500); // Wait 0.5 seconds to simulate thinking time
+        }
+
+        // --- Event Listeners ---
+        sendButton.addEventListener('click', handleSend);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSend();
+            }
+        });
+
+        // Focus the input field on load
+        window.onload = () => {
+            userInput.focus();
+        };
+
+    </script>
+</body>
+</html>

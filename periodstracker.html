@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Heal Buddy – Period Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, #ffe6f2, #fff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-6 text-center">
+    <h1 class="text-3xl font-extrabold text-pink-700">🩷 Period Cycle Tracker</h1>
+    <p class="text-sm text-pink-600">Track your menstrual cycle and stay informed about your health.</p>
+
+    <!-- Form Section -->
+    <div class="space-y-4 mt-4">
+      <div>
+        <label for="lastPeriod" class="block text-sm font-medium text-gray-700 mb-1">Last Period Date:</label>
+        <input type="date" id="lastPeriod" class="border border-gray-300 rounded-lg w-full p-2 focus:ring-2 focus:ring-pink-500">
+      </div>
+
+      <div>
+        <label for="cycleLength" class="block text-sm font-medium text-gray-700 mb-1">Average Cycle Length (in days):</label>
+        <input type="number" id="cycleLength" placeholder="e.g. 28" class="border border-gray-300 rounded-lg w-full p-2 focus:ring-2 focus:ring-pink-500">
+      </div>
+
+      <button id="calculateBtn" class="bg-pink-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-pink-700 transition w-full shadow-md">
+        Calculate Next Cycle
+      </button>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result" class="hidden mt-6 bg-pink-50 p-4 rounded-lg text-left border border-pink-100">
+      <h2 class="text-lg font-bold text-pink-700 mb-2">Your Cycle Details 🌷</h2>
+      <p id="nextPeriod" class="text-gray-700"></p>
+      <p id="fertileWindow" class="text-gray-700 mt-1"></p>
+      <p id="tip" class="text-sm text-pink-600 mt-3 italic"></p>
+    </div>
+     <!-- Saved Records Section -->
+    <div class="mt-6 text-left">
+      <h2 class="text-lg font-bold text-pink-700 mb-2">Your Saved Records 📝</h2>
+      <ul id="recordsList" class="space-y-1 text-gray-700"></ul>
+      </div>
+
+    <button id="clearRecords" class="text-red-500 text-sm underline mt-2">
+       Clear All Records
+    </button>
+    <!-- Back Button -->
+    <a href="index.html" class="text-sm text-pink-500 hover:underline block mt-4">← Back to Home</a>
+  </div>
+
+  <script>
+    const calculateBtn = document.getElementById('calculateBtn');
+    const resultDiv = document.getElementById('result');
+    const nextPeriodP = document.getElementById('nextPeriod');
+    const fertileWindowP = document.getElementById('fertileWindow');
+    const tipP = document.getElementById('tip');
+
+    calculateBtn.addEventListener('click', () => {
+      const lastPeriod = document.getElementById('lastPeriod').value;
+      const cycleLength = parseInt(document.getElementById('cycleLength').value);
+
+      if (!lastPeriod || isNaN(cycleLength) || cycleLength < 20 || cycleLength > 40) {
+        alert('Please enter valid details (cycle length between 20–40 days).');
+        return;
+      }
+
+      const lastDate = new Date(lastPeriod);
+      const nextPeriodDate = new Date(lastDate);
+      nextPeriodDate.setDate(lastDate.getDate() + cycleLength);
+
+      // Fertile window = Ovulation - 14 days ± 2 days
+      const ovulationDate = new Date(nextPeriodDate);
+      ovulationDate.setDate(nextPeriodDate.getDate() - 14);
+      const fertileStart = new Date(ovulationDate);
+      fertileStart.setDate(ovulationDate.getDate() - 2);
+      const fertileEnd = new Date(ovulationDate);
+      fertileEnd.setDate(ovulationDate.getDate() + 2);
+
+      // Format dates
+      const formatDate = (date) => date.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      nextPeriodP.textContent = `🩷 Your next expected period date: ${formatDate(nextPeriodDate)}`;
+      fertileWindowP.textContent = `🌸 Fertile Window: ${formatDate(fertileStart)} to ${formatDate(fertileEnd)}`;
+
+      // Health tip suggestions
+      const tips = [
+        "Stay hydrated and eat iron-rich foods during your period.",
+        "Track mood changes along with your cycle — it helps you understand patterns.",
+        "Gentle stretching and warm baths can ease cramps.",
+        "If your cycle is irregular often, consult a gynecologist.",
+        "Practice self-care and rest more during the first two days of your period."
+      ];
+      tipP.textContent = tips[Math.floor(Math.random() * tips.length)];
+
+      resultDiv.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
