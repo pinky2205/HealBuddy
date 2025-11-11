@@ -132,7 +132,7 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
             // --- SUPPORTIVE RULES (Focused entirely on comfort and grounding) ---
              if (normalizedMessage.includes('my name is')) {
                      username = message.substring(11).trim();
-                return "Hey, "  + username +  " nice to meet you☺️.";
+                return "Hey   "  +  username  +  "  nice to meet you☺️.";
             } else if (normalizedMessage.includes('how are you')) {
                 return "I'm good, how are you?.";
             }else if (normalizedMessage.includes('sad') || normalizedMessage.includes('down') || normalizedMessage.includes('depressed') || normalizedMessage.includes('cry')) {
@@ -158,7 +158,7 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
             } else if (normalizedMessage.includes('make me laugh') || normalizedMessage.includes('joke')) {
                 return "sure here's a joke for you - Why don't skeletons fight with each other? Because they don't have guts.🩻😂";
             } else if (normalizedMessage.includes('what is your name')) {
-                return "My name is HealBuddy, I'm a customised Chatbot made to give you comfort. But since you are special you can call me your bro😌✨";
+                return "My name is HealBuddy, I'm a customised Chatbot made to give you comfort. But since you are special you can call me your bro😌✨.Btw, what's your name?";
             } else if (normalizedMessage.includes('family problems') || normalizedMessage.includes('mother') || normalizedMessage.includes('father') ||  normalizedMessage.includes('sister') || normalizedMessage.includes('brother')) {
                 return "Family problems are a part of everyone's life. Dealing with it may sometimes become difficult. but you're a strong person you will overcome it.❤️‍🩹";
             } else if (normalizedMessage.includes('accident') || normalizedMessage.includes('injured') || normalizedMessage.includes('ill')) {
@@ -232,6 +232,7 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
 </body>
 
 </html>
+
 
 
 
