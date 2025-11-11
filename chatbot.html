@@ -133,6 +133,8 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
                 return "It's okay to feel that way. Right now, can you try to relax your shoulders and unclench your jaw? Just noticing your body can sometimes ease the emotional weight.";
             } else if (normalizedMessage.includes('alone') || normalizedMessage.includes('lonely') || normalizedMessage.includes('nobody')) {
                 return "You are not alone! I'm right here with you. Share freely anything you want to";
+            } else if (normalizedMessage.includes('i need someone to talk to') || normalizedMessage.includes('i need you to talk with me')) {
+                return "I'm here for you. Say whatever you want to. I'm open all ears. How are you feeling today?";
             } else if (normalizedMessage.includes('cope') || normalizedMessage.includes('overwhelmed') || normalizedMessage.includes('cannot')) {
                 return "This feeling is temporary. Let's practice 'micro-breaks.' Look away from the screen for 30 seconds and just breathe slowly. You only need to focus on this moment.";
             } else if (normalizedMessage.includes('stressed') || normalizedMessage.includes('anxious') || normalizedMessage.includes('panic') || normalizedMessage.includes('worry') || normalizedMessage.includes('depressed')) {
@@ -212,4 +214,5 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
 
     </script>
 </body>
+
 </html>
