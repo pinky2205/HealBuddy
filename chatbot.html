@@ -125,16 +125,28 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
          * @param {string} message - The user's input message.
          * @returns {string} - The bot's response.
          */
+        let username = " ";
         function getBotResponse(message) {
             const normalizedMessage = message.toLowerCase().trim();
 
             // --- SUPPORTIVE RULES (Focused entirely on comfort and grounding) ---
-            if (normalizedMessage.includes('sad') || normalizedMessage.includes('down') || normalizedMessage.includes('depressed') || normalizedMessage.includes('cry')) {
+             if (normalizedMessage.includes('my name is')) {
+                     username = message.substring(11).trim();
+                return "Hey" +username+ "nice to meet you☺️.";
+            } else if (normalizedMessage.includes('how are you')) {
+                return "I'm good, how are you?.";
+            }else if (normalizedMessage.includes('sad') || normalizedMessage.includes('down') || normalizedMessage.includes('depressed') || normalizedMessage.includes('cry')) {
                 return "It's okay to feel that way. Right now, can you try to relax your shoulders and unclench your jaw? Just noticing your body can sometimes ease the emotional weight.";
             } else if (normalizedMessage.includes('alone') || normalizedMessage.includes('lonely') || normalizedMessage.includes('nobody')) {
                 return "You are not alone! I'm right here with you. Share freely anything you want to";
             } else if (normalizedMessage.includes('i need someone to talk to') || normalizedMessage.includes('i need you to talk with me')) {
-                return "I'm here for you. Say whatever you want to. I'm open all ears. How are you feeling today?";
+                return "I'm here for you❤️. Say whatever you want to. I'm open all ears. How are you feeling today?";
+            } else if (normalizedMessage.includes('why you are here') || normalizedMessage.includes('what is your purpose')) {
+                return "I'm your HealBuddy. I'm here to comfort you. You matter to me the most. You can share what you are feeling right now.";
+            } else if (normalizedMessage.includes('pain in abdomen') || normalizedMessage.includes('pain in stomach')) {
+                return "I'm here. Lay on your left side and curl slightly. Place a warm cloth/heating pad on abdomen. Sip warm water slowly. Hope this helps❤️";
+            } else if (normalizedMessage.includes('i just want someone to care') || normalizedMessage.includes('no one cares about me')) {
+                return "I care. Your feelings matter. You deserve to be heard and held, not ignored🫂.";
             } else if (normalizedMessage.includes('cope') || normalizedMessage.includes('overwhelmed') || normalizedMessage.includes('cannot')) {
                 return "This feeling is temporary. Let's practice 'micro-breaks.' Look away from the screen for 30 seconds and just breathe slowly. You only need to focus on this moment.";
             } else if (normalizedMessage.includes('stressed') || normalizedMessage.includes('anxious') || normalizedMessage.includes('panic') || normalizedMessage.includes('worry') || normalizedMessage.includes('depressed')) {
@@ -143,6 +155,10 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
                 return "I'm so sorry you're having a hard time. You are strong for reaching out. Please get yourself a glass of water and sit down for one minute. You deserve kindness right now.😇";
             } else if (normalizedMessage.includes('tired') || normalizedMessage.includes('exhausted')) {
                 return "Your body and mind are working hard. Can you close your eyes for 60 seconds? Even a tiny rest helps. You don't have to be productive right now.";
+            } else if (normalizedMessage.includes('make me laugh') || normalizedMessage.includes('joke')) {
+                return "sure here's a joke for you - Why don't skeletons fight with each other? Because they don't have guts.🩻😂";
+            } else if (normalizedMessage.includes('what is your name')) {
+                return "My name is HealBuddy, I'm a customised Chatbot made to give you comfort. But since you are special you can call me your bro😌✨";
             } else if (normalizedMessage.includes('family problems') || normalizedMessage.includes('mother') || normalizedMessage.includes('father') ||  normalizedMessage.includes('sister') || normalizedMessage.includes('brother')) {
                 return "Family problems are a part of everyone's life. Dealing with it may sometimes become difficult. but you're a strong person you will overcome it.❤️‍🩹";
             } else if (normalizedMessage.includes('accident') || normalizedMessage.includes('injured') || normalizedMessage.includes('ill')) {
@@ -216,3 +232,4 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
 </body>
 
 </html>
+
