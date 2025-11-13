@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Heal Buddy</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* New Font: Nunito - known for being soft and friendly */
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
         
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #fafafa; /* Lighter, warmer background */
+            background-color: #fafafa; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,35 +22,26 @@
             overflow-y: auto;
             scroll-behavior: smooth;
         }
-        
-        /* Styling for User Messages (Deep, Rich Violet with enhanced shadow) */
         .user-bubble {
             background-color: #d92895; 
             color: white;
-            /* Soft, rounded corners */
             border-radius: 1.25rem 1.25rem 0.25rem 1.25rem; 
             padding: 0.85rem 1.2rem;
             max-width: 80%;
             align-self: flex-end;
-            /* Enhanced, colored shadow for depth */
             box-shadow: 0 6px 15px -3px rgba(217, 40, 170, 0.3), 0 4px 6px -2px rgba(109, 40, 217, 0.2); 
         }
-        
-        /* Styling for Bot Messages (Soft Lavender for a gentle, light tone) */
         .bot-bubble {
-            background-color: #ffe8f5; /* Lightest Violet-100 */
-            color: #951d79; /* Deep Violet text for readability */
-            /* Soft, rounded corners */
+            background-color: #ffe8f5; 
+            color: #951d79; 
             border-radius: 1.25rem 1.25rem 1.25rem 0.25rem; 
             padding: 0.85rem 1.2rem;
             max-width: 80%;
             align-self: flex-start;
-            /* Subtle shadow */
             box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06); 
         }
         
         .message-text {
-            /* This preserves formatting for the multi-line responses */
             white-space: pre-wrap;
         }
     </style>
@@ -64,20 +53,14 @@
             <h1 class="text-xl font-extrabold text-pink-700">Your Heal Buddy</h1>
             <p class="text-sm text-pink-600 mt-1">A safe space to share your worries and find a moment of calm.</p>
         </header>
-
-        <!-- Chat Display Area -->
         <div id="chat-container" class="flex-grow p-4 space-y-4 flex flex-col">
-            <!-- Initial Welcome Message -->
             <div class="flex justify-start">
                 <div class="bot-bubble">
                     <pre class="message-text">Welcome. I'm here for you right now. 
 There's no pressure to talk, but if you want to share how you're feeling, I'm open all ears.</pre>
                 </div>
             </div>
-            <!-- Messages will be appended here -->
         </div>
-
-        <!-- Input Area -->
         <div class="p-4 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
             <div class="flex">
                 <input type="text" id="user-input" placeholder="Type how you're feeling..." class="flex-grow p-3 border border-gray-300 rounded-l-xl focus:outline-none focus:ring-2 focus:ring-pink-500 text-gray-700" autocomplete="off">
@@ -89,24 +72,16 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
     </div>
 
     <script>
-        // --- Core Application Logic ---
 
         const chatContainer = document.getElementById('chat-container');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
 
-        /**
-         * Scrolls the chat container to the bottom.
-         */
         function scrollToBottom() {
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        /**
-         * Renders a message bubble into the chat container.
-         * @param {string} text - The message content.
-         * @param {'user' | 'bot'} role - The sender's role.
-         */
+        
         function renderMessage(text, role) {
             const bubbleContainer = document.createElement('div');
             bubbleContainer.className = 'flex ' + (role === 'user' ? 'justify-end' : 'justify-start');
@@ -120,16 +95,11 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
             scrollToBottom();
         }
 
-        /**
-         * The simplified, non-AI logic for the chatbot.
-         * @param {string} message - The user's input message.
-         * @returns {string} - The bot's response.
-         */
+      
         let username = " ";
         function getBotResponse(message) {
             const normalizedMessage = message.toLowerCase().trim();
 
-            // --- SUPPORTIVE RULES (Focused entirely on comfort and grounding) ---
              if (normalizedMessage.includes('my name is')) {
                      username = message.substring(11).trim();
                 return "Hey" +username+ "nice to meet you☺️.";
@@ -195,27 +165,23 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
 
         }
 
-        /**
-         * Handles the entire send and respond sequence.
-         */
+       
         function handleSend() {
             const userText = userInput.value.trim();
             if (userText === '') return;
 
-            // 1. Render user message
+            
             renderMessage(userText, 'user');
 
-            // 2. Clear input
+          
             userInput.value = '';
             
-            // 3. Get bot response and render it after a short delay
+          
             setTimeout(() => {
                 const botResponse = getBotResponse(userText);
                 renderMessage(botResponse, 'bot');
-            }, 500); // Wait 0.5 seconds to simulate thinking time
+            }, 500); 
         }
-
-        // --- Event Listeners ---
         sendButton.addEventListener('click', handleSend);
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -223,7 +189,6 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
             }
         });
 
-        // Focus the input field on load
         window.onload = () => {
             userInput.focus();
         };
@@ -232,6 +197,7 @@ There's no pressure to talk, but if you want to share how you're feeling, I'm op
 </body>
 
 </html>
+
 
 
 
